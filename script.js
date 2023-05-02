@@ -71,26 +71,42 @@ function checkWinner() {
   const tile8 = document.getElementById("tile-8").innerHTML;
 
   // Horizontal check
-  if (tile0 == tile1 && tile1 == tile2 && tile0 != "" && tile1 != "" && tile2 != "")
+  if (tile0 == tile1 && tile1 == tile2 && tile0 != "" && tile1 != "" && tile2 != "") {
     announceWinner();
-  if (tile3 == tile4 && tile4 == tile5 && tile3 != "" && tile4 != "" && tile5 != "")
+    return;
+  }
+  if (tile3 == tile4 && tile4 == tile5 && tile3 != "" && tile4 != "" && tile5 != "") {
     announceWinner();
-  if (tile6 == tile7 && tile7 == tile8 && tile6 != "" && tile7 != "" && tile8 != "")
+    return;
+  }
+  if (tile6 == tile7 && tile7 == tile8 && tile6 != "" && tile7 != "" && tile8 != "") {
     announceWinner();
+    return;
+  }
 
   // Vertical check
-  if (tile0 == tile3 && tile3 == tile6 && tile0 != "" && tile3 != "" && tile6 != "")
+  if (tile0 == tile3 && tile3 == tile6 && tile0 != "" && tile3 != "" && tile6 != "") {
     announceWinner();
-  if (tile1 == tile4 && tile4 == tile7 && tile1 != "" && tile4 != "" && tile7 != "")
+    return;
+  }
+  if (tile1 == tile4 && tile4 == tile7 && tile1 != "" && tile4 != "" && tile7 != "") {
     announceWinner();
-  if (tile2 == tile5 && tile5 == tile8 && tile2 != "" && tile5 != "" && tile8 != "")
+    return;
+  }
+  if (tile2 == tile5 && tile5 == tile8 && tile2 != "" && tile5 != "" && tile8 != "") {
     announceWinner();
+    return;
+  }
 
   // Diagonal check
-  if (tile0 == tile4 && tile4 == tile8 && tile0 != "" && tile4 != "" && tile8 != "")
+  if (tile0 == tile4 && tile4 == tile8 && tile0 != "" && tile4 != "" && tile8 != "") {
     announceWinner();
-  if (tile2 == tile4 && tile4 == tile6 && tile2 != "" && tile4 != "" && tile6 != "")
+    return;
+  }
+  if (tile2 == tile4 && tile4 == tile6 && tile2 != "" && tile4 != "" && tile6 != "") {
     announceWinner();
+    return;
+  }
 
   // Check for a draw
   if (
@@ -115,7 +131,6 @@ function announceWinner() {
   gameStatus.over = true;
   if (gameStatus.draw == true) {
     winnerTextfield.textContent = "It's a draw.";
-    draw = false;
   } else if (player1.isTurn == true) {
     winnerTextfield.textContent = "Player 1 wins!";
   } else if (player2.isTurn == true) {

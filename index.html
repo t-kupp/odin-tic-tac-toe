@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
@@ -23,6 +19,17 @@
   <body>
     <h1 id="header">Tic Tac Toe</h1>
     <div id="grid"></div>
+    <div id="active-turn">
+      <div id="player-1-display">
+        <p id="player-1-name">Player 1</p>
+        <p id="player-1-score">0</p>
+      </div>
+      <div id="player-2-display">
+        <p id="player-2-name">Player 2</p>
+        <p id="player-2-score">0</p>
+      </div>
+    </div>
+    <h2 id="winner"></h2>
     <p id="copyright">
       2023 created by T-Kupp<a id="copyright-link" target="_blank" href="https://github.com/t-kupp">
         <i id="github-icon" class="fa-brands fa-github"></i>

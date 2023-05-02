@@ -13,6 +13,8 @@
 }
 
 body {
+  color: var(--main-color-2);
+  font-family: "Poppins", sans-serif;
   background-color: var(--main-color-0);
   padding: 20px;
   display: flex;
@@ -26,17 +28,11 @@ body {
   font-size: 3rem;
   line-height: 4rem;
   padding: 0 20px;
-  margin: 5rem;
-  color: var(--main-color-2);
   font-family: "Pacifico", sans-serif;
   border-bottom: 4px solid var(--main-color-2);
 }
 
 #grid {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--main-color-1);
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -60,6 +56,38 @@ body {
   pointer-events: none;
 }
 
+#active-turn {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#player-1-name,
+#player-2-name {
+  color: var(--main-color-0);
+  background-color: var(--main-color-2);
+  border-radius: 25px;
+  font-size: 20px;
+  padding: 5px 15px;
+  font-weight: 600;
+}
+
+#player-1-score,
+#player-2-score {
+  width: 100%;
+  text-align: center;
+  font-size: 68px;
+  color: var(--main-color-1);
+  display: inline-block;
+  padding: 0 10px;
+  font-weight: 500;
+}
+
+#winner {
+  height: 50px;
+}
+
+/* Copyright and source link  */
 #copyright {
   font-weight: 600;
   font-size: 12px;

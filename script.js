@@ -40,11 +40,11 @@ player1.isTurn = true;
 function playRound(activeTile) {
   if (activeTile.innerHTML !== "") return; //Check for empty tile
   //Player 1 turn
+
   if (player1.isTurn == true) {
     activeTile.innerHTML = player1.mark;
     checkWinner();
-    player1.isTurn = false;
-    player2.isTurn = true;
+    switchPlayerTurn();
     return;
   }
 
@@ -52,8 +52,7 @@ function playRound(activeTile) {
   if (player2.isTurn == true) {
     activeTile.innerHTML = player2.mark;
     checkWinner();
-    player1.isTurn = true;
-    player2.isTurn = false;
+    switchPlayerTurn();
     return;
   }
 }
@@ -176,13 +175,25 @@ function updateScoreboard() {
   player2Scorefield.textContent = player2.score;
 }
 
+// Switch whose first turn it is
+function switchPlayerTurn() {
+  if (player1.isTurn == true) {
+    player1.isTurn = false;
+    player2.isTurn = true;
+    return;
+  }
+  if (player2.isTurn == true) {
+    player1.isTurn = true;
+    player2.isTurn = false;
+    return;
+  }
+}
+
 //Reset the game
 function resetGame() {
   gameStatus.draw = false;
   gameStatus.over = false;
   winnerTextfield.textContent = "";
-  player1.isTurn = true;
-  player2.isTurn = false;
   grid.innerHTML = "";
   updateActivePlayer();
   drawGrid();

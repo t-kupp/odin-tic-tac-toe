@@ -1,0 +1,59 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color-0: #fbe8a6;
+  --main-color-1: #f4976c;
+  --main-color-2: #303c6c;
+  --main-color-3: #b4dfe5;
+  --main-color-4: #d2fdff;
+}
+
+body {
+  background-color: var(--main-color-0);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#header {
+  font-size: 3rem;
+  line-height: 4rem;
+  padding: 0 20px;
+  margin: 5rem;
+  color: var(--main-color-2);
+  font-family: "Pacifico", sans-serif;
+  border-bottom: 4px solid var(--main-color-2);
+}
+
+#grid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-color-1);
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 6px;
+}
+
+.grid-tile {
+  color: var(--main-color-2);
+  font-size: 72px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+  background-color: var(--main-color-0);
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+}
+
+/* needed for empty tile check */
+.fa-solid {
+  pointer-events: none;
+}

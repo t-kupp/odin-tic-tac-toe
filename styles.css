@@ -25,29 +25,29 @@ body {
 }
 
 #header {
-  font-size: 3rem;
+  font-size: 3.5rem;
   line-height: 4rem;
   padding: 0 20px;
   font-family: "Pacifico", sans-serif;
-  border-bottom: 4px solid var(--main-color-2);
 }
 
 #grid {
+  margin: 20px;
   background-color: var(--main-color-1);
   display: grid;
-  grid-template-columns: repeat(3, 100px);
+  grid-template-columns: repeat(3, 120px);
   gap: 6px;
 }
 
 .grid-tile {
   color: var(--main-color-2);
-  font-size: 72px;
+  font-size: 5rem;
   text-align: center;
   vertical-align: middle;
-  line-height: 100px;
+  line-height: 120px;
   background-color: var(--main-color-0);
-  height: 100px;
-  width: 100px;
+  height: 120px;
+  width: 120px;
   cursor: pointer;
 }
 
@@ -67,7 +67,6 @@ body {
   color: var(--main-color-0);
   background-color: var(--main-color-2);
   border-radius: 25px;
-  font-size: 20px;
   padding: 5px 15px;
   font-weight: 600;
 }
@@ -76,7 +75,7 @@ body {
 #player-2-score {
   width: 100%;
   text-align: center;
-  font-size: 68px;
+  font-size: 48px;
   color: var(--main-color-1);
   display: inline-block;
   padding: 0 10px;
@@ -125,4 +124,29 @@ body {
 #github-icon:hover {
   color: var(--main-color-2);
   transform: scale(1.1);
+}
+
+@media screen and (max-width: 800px) {
+  #header {
+    font-size: 2.5rem;
+  }
+
+  #grid {
+    grid-template-columns: repeat(3, 80px);
+  }
+
+  .grid-tile {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 4rem;
+  }
+  #active-turn {
+    width: 300px;
+  }
+
+  #player-1-score,
+  #player-2-score {
+    font-size: 42px;
+  }
 }

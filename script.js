@@ -8,6 +8,8 @@ const friendModeBtn = document.querySelector("#friend-mode");
 const computerModeBtn = document.querySelector("#computer-mode");
 const modeSelectWrapper = document.querySelector("#mode-select-wrapper");
 
+let gridTiles = ["", "", "", "", "", "", "", "", ""];
+
 // Game mode selection
 friendModeBtn.addEventListener("click", () => {
   gameStatus.mode = "friend";
@@ -19,8 +21,6 @@ computerModeBtn.addEventListener("click", () => {
   modeSelectWrapper.style.display = "none";
   updatePlayerNames();
 });
-
-let gridTiles = ["", "", "", "", "", "", "", "", ""];
 
 // Constructing the players
 function Player(name, mark, score) {
@@ -48,8 +48,6 @@ function drawGrid() {
     newTile.setAttribute("id", `${i}`);
     newTile.addEventListener("click", (e) => {
       updateArray(e.target.id);
-      checkForWin();
-      switchActivePlayer();
       drawGrid();
     });
     newTile.innerHTML = gridTiles[i];
@@ -60,10 +58,11 @@ drawGrid();
 // Update the array on tile click
 function updateArray(targetTile) {
   convertToIcon();
-  if (gridTiles[targetTile] == "") {
-    gridTiles[targetTile] = gameStatus.activePlayer.mark;
-  }
+  if (gridTiles[targetTile] != "") return;
+  gridTiles[targetTile] = gameStatus.activePlayer.mark;
   convertToMark();
+  checkForWin();
+  switchActivePlayer();
 }
 
 // Convert marks to icons

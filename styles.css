@@ -102,6 +102,7 @@ body {
   align-items: center;
   font-family: "Pacifico", sans-serif;
   width: 50vw;
+  min-height: 400px;
   height: 50vh;
   background-color: var(--main-color-0);
   position: absolute;
@@ -112,9 +113,17 @@ body {
 }
 
 #mode-select > p {
+  text-align: center;
   line-height: 2.5rem;
   padding: 0 30px;
   border-bottom: 3px solid var(--main-color-1);
+}
+
+#select-btn-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .mode-select-btn {
@@ -126,7 +135,7 @@ body {
   border: none;
   width: 250px;
   padding: 5px 0;
-  margin: 0 20px;
+  margin: 10px 20px;
   border-radius: 50px;
   transition: 200ms ease-in-out;
 }
@@ -210,5 +219,13 @@ body {
   #player-1-score,
   #player-2-score {
     font-size: 42px;
+  }
+
+  #mode-select {
+    font-size: 1.5rem;
+  }
+  .mode-select-btn {
+    font-size: 1rem;
+    width: 150px;
   }
 }

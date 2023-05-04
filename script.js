@@ -2,140 +2,117 @@ const grid = document.querySelector("#grid");
 const winnerTextfield = document.querySelector("#winner");
 const player1Textfield = document.querySelector("#player-1-name");
 const player2Textfield = document.querySelector("#player-2-name");
-const player1Scorefield = document.querySelector("#player-1-score");
-const player2Scorefield = document.querySelector("#player-2-score");
+const player1ScoreField = document.querySelector("#player-1-score");
+const player2ScoreField = document.querySelector("#player-2-score");
 
+let gridTiles = ["", "", "", "", "", "", "", "", ""];
+
+// Constructing the players
+function Player(name, mark, score) {
+  this.name = name;
+  this.mark = mark;
+  this.score = score;
+}
+
+const player1 = new Player("Player 1", "x", 0);
+const player2 = new Player("Player 2", "o", 0);
+
+// Game status data storage
 const gameStatus = {
-  draw: false,
-  over: false,
+  activePlayer: player1,
 };
 
-// Draw the 3x3 playing grid
+// Draw the grid and update the marks when a player clicks on the tiles
 function drawGrid() {
+  grid.innerHTML = "";
   for (let i = 0; i < 9; i++) {
     const newTile = grid.appendChild(document.createElement("div"));
     newTile.classList.add("grid-tile");
+    newTile.setAttribute("id", `${i}`);
     newTile.addEventListener("click", (e) => {
-      playRound(e.target);
-      updateActivePlayer();
+      updateArray(e.target.id);
+      checkForWin();
+      switchActivePlayer();
+      drawGrid();
     });
-    newTile.setAttribute("id", `tile-${i}`);
+    newTile.innerHTML = gridTiles[i];
   }
 }
 drawGrid();
 
-// Constructing the players
-function Player(name, mark, score, isTurn) {
-  this.name = name;
-  this.mark = mark;
-  this.score = score;
-  this.isTurn = isTurn;
-}
-const player1 = new Player("Player 1", '<i class="fa-solid fa-xmark"></i>', 0, false);
-const player2 = new Player("Player 2", '<i class="fa-solid fa-o"></i>', 0, false);
-
-// Playing the game!
-player1.isTurn = true;
-
-function playRound(activeTile) {
-  if (activeTile.innerHTML !== "") return; //Check for empty tile
-  //Player 1 turn
-
-  if (player1.isTurn == true) {
-    activeTile.innerHTML = player1.mark;
-    checkWinner();
-    switchPlayerTurn();
-    return;
+// Update the array on tile click
+function updateArray(targetTile) {
+  convertToIcon();
+  if (gridTiles[targetTile] == "") {
+    gridTiles[targetTile] = gameStatus.activePlayer.mark;
   }
-
-  // Player 2 turn
-  if (player2.isTurn == true) {
-    activeTile.innerHTML = player2.mark;
-    checkWinner();
-    switchPlayerTurn();
-    return;
-  }
+  convertToMark();
 }
 
-// Check for a winner
-function checkWinner() {
-  const tile0 = document.getElementById("tile-0").innerHTML;
-  const tile1 = document.getElementById("tile-1").innerHTML;
-  const tile2 = document.getElementById("tile-2").innerHTML;
-  const tile3 = document.getElementById("tile-3").innerHTML;
-  const tile4 = document.getElementById("tile-4").innerHTML;
-  const tile5 = document.getElementById("tile-5").innerHTML;
-  const tile6 = document.getElementById("tile-6").innerHTML;
-  const tile7 = document.getElementById("tile-7").innerHTML;
-  const tile8 = document.getElementById("tile-8").innerHTML;
+// Convert marks to icons
+function convertToIcon() {
+  if (gameStatus.activePlayer.mark == "x")
+    gameStatus.activePlayer.mark = '<i class="fa-solid fa-xmark"></i>';
+  if (gameStatus.activePlayer.mark == "o")
+    gameStatus.activePlayer.mark = '<i class="fa-solid fa-o"></i>';
+}
 
-  // Horizontal check
-  if (tile0 == tile1 && tile1 == tile2 && tile0 != "" && tile1 != "" && tile2 != "") {
-    announceWinner();
-    return;
-  }
-  if (tile3 == tile4 && tile4 == tile5 && tile3 != "" && tile4 != "" && tile5 != "") {
-    announceWinner();
-    return;
-  }
-  if (tile6 == tile7 && tile7 == tile8 && tile6 != "" && tile7 != "" && tile8 != "") {
-    announceWinner();
-    return;
-  }
+// Convert icons to marks
+function convertToMark() {
+  if (gameStatus.activePlayer.mark == '<i class="fa-solid fa-xmark"></i>')
+    gameStatus.activePlayer.mark = "x";
+  if (gameStatus.activePlayer.mark == '<i class="fa-solid fa-o"></i>')
+    gameStatus.activePlayer.mark = "o";
+}
 
-  // Vertical check
-  if (tile0 == tile3 && tile3 == tile6 && tile0 != "" && tile3 != "" && tile6 != "") {
-    announceWinner();
-    return;
+// Switch active player
+function switchActivePlayer() {
+  if (gameStatus.activePlayer == player1) {
+    gameStatus.activePlayer = player2;
+  } else {
+    gameStatus.activePlayer = player1;
   }
-  if (tile1 == tile4 && tile4 == tile7 && tile1 != "" && tile4 != "" && tile7 != "") {
-    announceWinner();
-    return;
-  }
-  if (tile2 == tile5 && tile5 == tile8 && tile2 != "" && tile5 != "" && tile8 != "") {
-    announceWinner();
-    return;
-  }
+}
 
-  // Diagonal check
-  if (tile0 == tile4 && tile4 == tile8 && tile0 != "" && tile4 != "" && tile8 != "") {
-    announceWinner();
-    return;
-  }
-  if (tile2 == tile4 && tile4 == tile6 && tile2 != "" && tile4 != "" && tile6 != "") {
-    announceWinner();
-    return;
-  }
-
-  // Check for a draw
+// Check for winning conditions
+function checkForWin() {
   if (
-    tile0 != "" &&
-    tile1 != "" &&
-    tile2 != "" &&
-    tile3 != "" &&
-    tile4 != "" &&
-    tile5 != "" &&
-    tile6 != "" &&
-    tile7 != "" &&
-    tile8
+    // Horizontal checks
+    (gridTiles[0] == gridTiles[1] && gridTiles[1] == gridTiles[2] && gridTiles[0] != "") ||
+    (gridTiles[3] == gridTiles[4] && gridTiles[4] == gridTiles[5] && gridTiles[3] != "") ||
+    (gridTiles[6] == gridTiles[7] && gridTiles[7] == gridTiles[8] && gridTiles[6] != "") ||
+    // Vertical checks
+    (gridTiles[0] == gridTiles[3] && gridTiles[3] == gridTiles[6] && gridTiles[0] != "") ||
+    (gridTiles[1] == gridTiles[4] && gridTiles[4] == gridTiles[7] && gridTiles[1] != "") ||
+    (gridTiles[2] == gridTiles[5] && gridTiles[5] == gridTiles[8] && gridTiles[2] != "") ||
+    // Diagonal checks
+    (gridTiles[0] == gridTiles[4] && gridTiles[4] == gridTiles[8] && gridTiles[0] != "") ||
+    (gridTiles[2] == gridTiles[4] && gridTiles[4] == gridTiles[6] && gridTiles[2] != "")
   ) {
-    gameStatus.draw = true;
-    announceWinner();
+    announceResult();
+    gameStatus.activePlayer.score++;
+    updateScoreboard();
+
+    return;
+  } else if (
+    // Draw check (all tiles are filled and no winner has been declared yet)
+    gridTiles[0] != "" &&
+    gridTiles[1] != "" &&
+    gridTiles[2] != "" &&
+    gridTiles[3] != "" &&
+    gridTiles[4] != "" &&
+    gridTiles[5] != "" &&
+    gridTiles[6] != "" &&
+    gridTiles[7] != "" &&
+    gridTiles[8] != ""
+  ) {
+    gameStatus.result = "draw";
+    announceResult();
   }
 }
 
-//Announce the winner
-function announceWinner() {
-  updateScoreboard();
-  gameStatus.over = true;
-  if (gameStatus.draw == true) {
-    winnerTextfield.textContent = "It's a draw.";
-  } else if (player1.isTurn == true) {
-    winnerTextfield.textContent = "Player 1 wins!";
-  } else if (player2.isTurn == true) {
-    winnerTextfield.textContent = "Player 2 wins!";
-  }
-
+// Announce the end result of the game
+function announceResult() {
   grid.addEventListener(
     "mousedown",
     () => {
@@ -143,58 +120,23 @@ function announceWinner() {
     },
     { once: true }
   );
+  if (gameStatus.result == "draw") {
+    winnerTextfield.textContent = "It's a draw.";
+    return;
+  }
+  winnerTextfield.textContent = `${gameStatus.activePlayer.name} won!`;
 }
-
-// Update the active player display
-function updateActivePlayer() {
-  if (gameStatus.over == true) {
-    player1Textfield.style.outline = "";
-    player2Textfield.style.outline = "";
-    return;
-  }
-
-  if (player1.isTurn == true) {
-    player1Textfield.style.outline = "6px solid var(--main-color-1)";
-    player2Textfield.style.outline = "";
-    return;
-  }
-  if (player2.isTurn == true) {
-    player1Textfield.style.outline = "";
-    player2Textfield.style.outline = "6px solid var(--main-color-1)";
-    return;
-  }
-}
-updateActivePlayer();
 
 // Update the scoreboard
 function updateScoreboard() {
-  if (gameStatus.draw == true) return;
-  if (player1.isTurn == true) player1.score++;
-  if (player2.isTurn == true) player2.score++;
-  player1Scorefield.textContent = player1.score;
-  player2Scorefield.textContent = player2.score;
+  player1ScoreField.textContent = player1.score;
+  player2ScoreField.textContent = player2.score;
 }
 
-// Switch whose first turn it is
-function switchPlayerTurn() {
-  if (player1.isTurn == true) {
-    player1.isTurn = false;
-    player2.isTurn = true;
-    return;
-  }
-  if (player2.isTurn == true) {
-    player1.isTurn = true;
-    player2.isTurn = false;
-    return;
-  }
-}
-
-//Reset the game
+// Reset the game to default settings
 function resetGame() {
-  gameStatus.draw = false;
-  gameStatus.over = false;
+  gridTiles = ["", "", "", "", "", "", "", "", ""];
+  gameStatus.result = "";
   winnerTextfield.textContent = "";
-  grid.innerHTML = "";
-  updateActivePlayer();
   drawGrid();
 }

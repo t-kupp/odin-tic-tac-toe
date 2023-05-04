@@ -24,12 +24,16 @@ body {
   height: 100vh;
 }
 
+/* Header  */
+
 #header {
   font-size: 3.5rem;
   line-height: 4rem;
   padding: 0 20px;
   font-family: "Pacifico", sans-serif;
 }
+
+/* Grid  */
 
 #grid {
   margin: 20px;
@@ -51,10 +55,11 @@ body {
   cursor: pointer;
 }
 
-/* needed for empty tile check */
 .fa-solid {
   pointer-events: none;
 }
+
+/* Scoreboard  */
 
 #active-turn {
   width: 500px;
@@ -84,6 +89,21 @@ body {
 
 #winner {
   height: 50px;
+}
+
+/* Mode select  */
+
+#mode-select {
+  width: 50vw;
+  height: 50vh;
+  background-color: aquamarine;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mode-select-btn {
 }
 
 /* Copyright and source link  */

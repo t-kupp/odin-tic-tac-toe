@@ -17,9 +17,14 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div id="mode-select">
-      <button class="mode-select-btn">Play against a friend</button> or
-      <button class="mode-select-btn">Play against the computer</button>
+    <div id="mode-select-wrapper">
+      <div id="mode-select">
+        <p>Who do you want to play against?</p>
+        <div>
+          <button id="friend-mode" class="mode-select-btn">A friend</button>
+          <button id="computer-mode" class="mode-select-btn">The computer (w.i.p)</button>
+        </div>
+      </div>
     </div>
     <h1 id="header">Tic Tac Toe</h1>
     <div id="grid"></div>

@@ -1,9 +1,24 @@
 const grid = document.querySelector("#grid");
 const winnerTextfield = document.querySelector("#winner");
-const player1Textfield = document.querySelector("#player-1-name");
-const player2Textfield = document.querySelector("#player-2-name");
+const player1NameField = document.querySelector("#player-1-name");
+const player2NameField = document.querySelector("#player-2-name");
 const player1ScoreField = document.querySelector("#player-1-score");
 const player2ScoreField = document.querySelector("#player-2-score");
+const friendModeBtn = document.querySelector("#friend-mode");
+const computerModeBtn = document.querySelector("#computer-mode");
+const modeSelectWrapper = document.querySelector("#mode-select-wrapper");
+
+// Game mode selection
+friendModeBtn.addEventListener("click", () => {
+  gameStatus.mode = "friend";
+  modeSelectWrapper.style.display = "none";
+  updatePlayerNames();
+});
+computerModeBtn.addEventListener("click", () => {
+  gameStatus.mode = "computer";
+  modeSelectWrapper.style.display = "none";
+  updatePlayerNames();
+});
 
 let gridTiles = ["", "", "", "", "", "", "", "", ""];
 
@@ -16,6 +31,7 @@ function Player(name, mark, score) {
 
 const player1 = new Player("Player 1", "x", 0);
 const player2 = new Player("Player 2", "o", 0);
+const playerAI = new Player("Computer", "o", 0);
 
 // Game status data storage
 const gameStatus = {
@@ -24,6 +40,7 @@ const gameStatus = {
 
 // Draw the grid and update the marks when a player clicks on the tiles
 function drawGrid() {
+  showActivePlayer();
   grid.innerHTML = "";
   for (let i = 0; i < 9; i++) {
     const newTile = grid.appendChild(document.createElement("div"));
@@ -67,6 +84,7 @@ function convertToMark() {
 
 // Switch active player
 function switchActivePlayer() {
+  if (gameStatus.mode == "computer") return;
   if (gameStatus.activePlayer == player1) {
     gameStatus.activePlayer = player2;
   } else {
@@ -89,6 +107,7 @@ function checkForWin() {
     (gridTiles[0] == gridTiles[4] && gridTiles[4] == gridTiles[8] && gridTiles[0] != "") ||
     (gridTiles[2] == gridTiles[4] && gridTiles[4] == gridTiles[6] && gridTiles[2] != "")
   ) {
+    gameStatus.result = "winner";
     announceResult();
     gameStatus.activePlayer.score++;
     updateScoreboard();
@@ -125,6 +144,31 @@ function announceResult() {
     return;
   }
   winnerTextfield.textContent = `${gameStatus.activePlayer.name} won!`;
+}
+
+// Indicate which players turn it is
+function showActivePlayer() {
+  if (gameStatus.result == "winner" || gameStatus.result == "draw") {
+    player1NameField.style.outline = "";
+    player2NameField.style.outline = "";
+    return;
+  }
+  if (gameStatus.activePlayer == player1) {
+    player1NameField.style.outline = "6px solid var(--main-color-1)";
+    player2NameField.style.outline = "";
+  }
+  if (gameStatus.activePlayer == player2) {
+    player1NameField.style.outline = "";
+    player2NameField.style.outline = "6px solid var(--main-color-1)";
+  }
+}
+
+// Update the player names
+function updatePlayerNames() {
+  player1NameField.innerHTML = `${player1.name} - <i class="fa-solid fa-xmark"></i>`;
+  player2NameField.innerHTML = `${player2.name} - <i class="fa-solid fa-o"></i>`;
+  if (gameStatus.mode == "computer")
+    player2NameField.innerHTML = `${playerAI.name} - <i class="fa-solid fa-o"></i>`;
 }
 
 // Update the scoreboard

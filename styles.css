@@ -38,7 +38,7 @@ body {
   background-color: var(--main-color-1);
   display: grid;
   grid-template-columns: repeat(3, 120px);
-  gap: 6px;
+  gap: 8px;
 }
 
 .grid-tile {

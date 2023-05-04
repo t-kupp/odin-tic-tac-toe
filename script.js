@@ -50,35 +50,18 @@ function drawGrid() {
       updateArray(e.target.id);
       drawGrid();
     });
-    newTile.innerHTML = gridTiles[i];
+    if (gridTiles[i] == "x") newTile.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    if (gridTiles[i] == "o") newTile.innerHTML = '<i class="fa-solid fa-o"></i>';
   }
 }
 drawGrid();
 
 // Update the array on tile click
 function updateArray(targetTile) {
-  convertToIcon();
   if (gridTiles[targetTile] != "") return;
   gridTiles[targetTile] = gameStatus.activePlayer.mark;
-  convertToMark();
   checkForWin();
   switchActivePlayer();
-}
-
-// Convert marks to icons
-function convertToIcon() {
-  if (gameStatus.activePlayer.mark == "x")
-    gameStatus.activePlayer.mark = '<i class="fa-solid fa-xmark"></i>';
-  if (gameStatus.activePlayer.mark == "o")
-    gameStatus.activePlayer.mark = '<i class="fa-solid fa-o"></i>';
-}
-
-// Convert icons to marks
-function convertToMark() {
-  if (gameStatus.activePlayer.mark == '<i class="fa-solid fa-xmark"></i>')
-    gameStatus.activePlayer.mark = "x";
-  if (gameStatus.activePlayer.mark == '<i class="fa-solid fa-o"></i>')
-    gameStatus.activePlayer.mark = "o";
 }
 
 // Switch active player

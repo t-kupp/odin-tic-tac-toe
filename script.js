@@ -31,7 +31,6 @@ function Player(name, mark, score) {
 
 const player1 = new Player("Player 1", "x", 0);
 const player2 = new Player("Player 2", "o", 0);
-const playerAI = new Player("Computer", "o", 0);
 
 // Game status data storage
 const gameStatus = {
@@ -62,11 +61,13 @@ function updateArray(targetTile) {
   gridTiles[targetTile] = gameStatus.activePlayer.mark;
   checkForWin();
   switchActivePlayer();
+  if (gameStatus.mode == "computer") {
+    computerMove();
+  }
 }
 
 // Switch active player
 function switchActivePlayer() {
-  if (gameStatus.mode == "computer") return;
   if (gameStatus.activePlayer == player1) {
     gameStatus.activePlayer = player2;
   } else {
@@ -148,8 +149,6 @@ function showActivePlayer() {
 function updatePlayerNames() {
   player1NameField.innerHTML = `${player1.name} - <i class="fa-solid fa-xmark"></i>`;
   player2NameField.innerHTML = `${player2.name} - <i class="fa-solid fa-o"></i>`;
-  if (gameStatus.mode == "computer")
-    player2NameField.innerHTML = `${playerAI.name} - <i class="fa-solid fa-o"></i>`;
 }
 
 // Update the scoreboard
@@ -165,3 +164,35 @@ function resetGame() {
   winnerTextfield.textContent = "";
   drawGrid();
 }
+
+// Computer AI
+function computerMove() {
+  if (gameStatus.result == "winner") {
+    switchActivePlayer();
+    return;
+  }
+  comOpeningMove();
+  checkForWin(); // remove later when comOpeningMove is just one move
+  comCheckForWin();
+  switchActivePlayer();
+}
+
+// Opening move for the AI, if middle tile is empty it will place its mark there, otherwise its random
+function comOpeningMove() {
+  if (gridTiles[4] == "") {
+    gridTiles[4] = gameStatus.activePlayer.mark;
+    return;
+  }
+  for (let i = 0; i < 9; i++) {
+    randomNum = Math.floor(Math.random() * 9);
+    if (gridTiles[randomNum] != "") {
+      continue;
+    }
+    gridTiles[randomNum] = gameStatus.activePlayer.mark;
+    drawGrid();
+    break;
+  }
+}
+
+// The AI checks if they can win with the next move
+function comCheckForWin() {}

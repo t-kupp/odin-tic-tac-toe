@@ -93,7 +93,6 @@ function checkForWin() {
     announceResult();
     gameStatus.activePlayer.score++;
     updateScoreboard();
-
     return;
   } else if (
     // Draw check (all tiles are filled and no winner has been declared yet)
